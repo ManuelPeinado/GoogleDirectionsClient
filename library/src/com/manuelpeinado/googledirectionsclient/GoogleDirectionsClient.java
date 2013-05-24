@@ -14,6 +14,7 @@ public class GoogleDirectionsClient {
     private static String ARGS = "origin=%s&destination=%s&sensor=true";
     private static String LOCATION_ARG = "%s,%s";
     private Task mTask;
+    private boolean mMockSlowResponse = true;
 
     private class Task extends AsyncTask<Void, Void, GoogleDirectionsResponse> {
         GoogleDirectionsResponseListener responseListener;
@@ -31,6 +32,9 @@ public class GoogleDirectionsClient {
 
         @Override
         protected GoogleDirectionsResponse doInBackground(Void... params) {
+            if (mMockSlowResponse) {
+                sleep(5000);
+            }
             return getDirectionsSync(lat0, lon0, lat1, lon1);
         }
 
@@ -61,6 +65,13 @@ public class GoogleDirectionsClient {
         }
     }
 
+    private static void sleep(int millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+        }
+    }
+
     private String encode(String arg) throws UnsupportedEncodingException {
         return URLEncoder.encode(arg, ENCODING);
     }
@@ -78,6 +89,13 @@ public class GoogleDirectionsClient {
     public void setResponseListener(GoogleDirectionsResponseListener listener) {
         if (mTask != null) {
             mTask.setResponseListener(listener);
+        }
+    }
+
+    public void cancel() {
+        if (mTask != null) {
+            mTask.cancel(true);
+            mTask = null;
         }
     }
 }

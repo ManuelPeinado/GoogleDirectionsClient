@@ -1,0 +1,14 @@
+<resources>
+
+    <dimen name="horizontal_margin_xsmall">6dp</dimen>
+    <dimen name="horizontal_margin_small">12dp</dimen>
+    <dimen name="horizontal_margin_medium">18dp</dimen>
+    <dimen name="horizontal_margin_large">24dp</dimen>
+    <dimen name="horizontal_margin_xlarge">30dp</dimen>
+    <dimen name="vertical_margin_xsmall">4dp</dimen>
+    <dimen name="vertical_margin_small">8dp</dimen>
+    <dimen name="vertical_margin_medium">12dp</dimen>
+    <dimen name="vertical_margin_large">16dp</dimen>
+    <dimen name="vertical_margin_xlarge">24dp</dimen>
+    
+</resources>

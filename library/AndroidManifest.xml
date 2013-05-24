@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.manuelpeinado.googlegeocodingclient"
+    package="com.manuelpeinado.googledirectionsclient"
     android:versionCode="1"
     android:versionName="0.1" >
 
