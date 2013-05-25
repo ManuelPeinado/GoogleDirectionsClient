@@ -16,32 +16,23 @@ public class GoogleDirectionsClient {
     private Task mTask;
     private boolean mMockSlowResponse = true;
 
-    private class Task extends AsyncTask<Void, Void, GoogleDirectionsResponse> {
+    private class Task extends AsyncTask<Void, Void, Object> {
         GoogleDirectionsResponseListener responseListener;
-        private final double lat0;
-        private final double lon0;
-        private final double lat1;
-        private final double lon1;
+        Query query;
 
-        private Task(double lat0, double lon0, double lat1, double lon1) {
-            this.lat0 = lat0;
-            this.lon0 = lon0;
-            this.lat1 = lat1;
-            this.lon1 = lon1;
+        private Task(Query query) {
+            this.query = query;
         }
 
         @Override
-        protected GoogleDirectionsResponse doInBackground(Void... params) {
-            if (mMockSlowResponse) {
-                sleep(5000);
-            }
-            return getDirectionsSync(lat0, lon0, lat1, lon1);
+        protected Object doInBackground(Void... params) {
+            return getDirectionsSync(query);
         }
 
         @Override
-        protected void onPostExecute(GoogleDirectionsResponse response) {
+        protected void onPostExecute(Object response) {
             if (responseListener != null) {
-                responseListener.onResponseReady(response);
+                responseListener.onResponseReady((GoogleDirectionsResponse) response);
             }
         }
 
@@ -50,25 +41,32 @@ public class GoogleDirectionsClient {
         }
     }
 
-    public GoogleDirectionsResponse getDirectionsSync(double lat0, double lon0, double lat1, double lon1) {
+    public GoogleDirectionsResponse getDirectionsSync(Query query) {
         try {
-            String start = String.format(LOCATION_ARG, lat0, lon0);
-            String end = String.format(LOCATION_ARG, lat1, lon1);
+            String json = getRawResponseSync(query);
+            if (json != null) {
+                Gson gson = new Gson();
+                return gson.fromJson(json, GoogleDirectionsResponse.class);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public String getRawResponseSync(Query query) {
+        try {
+            if (mMockSlowResponse) {
+                Thread.sleep(10000);
+            }
+            String start = String.format(LOCATION_ARG, query.lat0, query.lng0);
+            String end = String.format(LOCATION_ARG, query.lat1, query.lng1);
             String args = String.format(ARGS, encode(start), encode(end));
             String url = BASE_URL + args;
-            String json = new Resty().text(url).toString();
-            Gson gson = new Gson();
-            return gson.fromJson(json, GoogleDirectionsResponse.class);
+            return new Resty().text(url).toString();
         } catch (Exception e) {
             e.printStackTrace();
             return null;
-        }
-    }
-
-    private static void sleep(int millis) {
-        try {
-            Thread.sleep(millis);
-        } catch (InterruptedException e) {
         }
     }
 
@@ -76,12 +74,11 @@ public class GoogleDirectionsClient {
         return URLEncoder.encode(arg, ENCODING);
     }
 
-    public void sendRequest(double lat0, double lon0, double lat1, double lon1,
-            GoogleDirectionsResponseListener responseListener) {
+    public void sendRequest(Query query, GoogleDirectionsResponseListener responseListener) {
         if (mTask != null) {
             mTask.setResponseListener(null);
         }
-        mTask = new Task(lat0, lon0, lat1, lon1);
+        mTask = new Task(query);
         mTask.setResponseListener(responseListener);
         mTask.execute();
     }

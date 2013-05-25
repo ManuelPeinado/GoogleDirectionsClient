@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import com.manuelpeinado.googledirectionsclient.GoogleDirectionsClient;
 import com.manuelpeinado.googledirectionsclient.GoogleDirectionsResponse;
 import com.manuelpeinado.googledirectionsclient.GoogleDirectionsResponseListener;
+import com.manuelpeinado.googledirectionsclient.Query;
 
 public class GoogleDirectionsFragment extends Fragment implements GoogleDirectionsResponseListener {
     private GoogleDirectionsClient mClient;
@@ -15,10 +16,7 @@ public class GoogleDirectionsFragment extends Fragment implements GoogleDirectio
     public static GoogleDirectionsFragment newInstance(double lat0, double lng0, double lat1, double lng1) {
         GoogleDirectionsFragment result = new GoogleDirectionsFragment();
         Bundle args = new Bundle();
-        args.putDouble("lat0", lat0);
-        args.putDouble("lng0", lng0);
-        args.putDouble("lat1", lat1);
-        args.putDouble("lng1", lng1);
+        args.putParcelable("query", new Query(lat0, lng0, lat1, lng1));
         result.setArguments(args);
         return result;
     }
@@ -44,11 +42,8 @@ public class GoogleDirectionsFragment extends Fragment implements GoogleDirectio
         mListener = (GoogleDirectionsResponseListener) activity;
 
         if (firstTime) {
-            double lat0 = getArguments().getDouble("lat0");
-            double lat1 = getArguments().getDouble("lat1");
-            double lng0 = getArguments().getDouble("lng0");
-            double lng1 = getArguments().getDouble("lng1");
-            mClient.sendRequest(lat0, lng0, lat1, lng1, this);
+            Query query = (Query)getArguments().getParcelable("query");
+            mClient.sendRequest(query, this);
         }
     }
 

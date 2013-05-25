@@ -41,6 +41,13 @@
         <activity
             android:name="com.manuelpeinado.googledirectionsclient.demo.DirectionsFragmentActivity"
             android:label="@string/activity_title_directions_fragment" />
+        <activity
+            android:name="com.manuelpeinado.googledirectionsclient.demo.DirectionsServiceActivity"
+            android:label="@string/activity_title_directions_service" />
+
+        <service
+            android:name="com.manuelpeinado.googledirectionsclient.service.GoogleDirectionsService"
+            android:enabled="true" />
 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"

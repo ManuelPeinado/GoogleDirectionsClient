@@ -3,6 +3,7 @@
 
     <string name="app_name">GoogleDirectionsClient demo</string>
     <string name="activity_title_directions_fragment">GoogleDirectionsFragment sample</string>
+    <string name="activity_title_directions_service">GoogleDirectionsService sample</string>
     <string name="could_not_load_map">Could not load map</string>
     <string name="get_directions">Get Directions!</string>
     <string name="get_directions_error">Ooops! An error has occurred while getting directions</string>

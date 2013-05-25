@@ -19,17 +19,13 @@ public class DirectionsFragmentActivity extends SherlockFragmentActivity impleme
     private static final String DIRECTIONS_FRAGMENT = "geocoding";
     private Button mButton;
     private FragmentManager mFragmentManager;
-    private static final double MADRID_LAT = 40.4;
-    private static final double MADRID_LNG = -3.683333;
-    private static final double BARCELONA_LAT = 41.383333; 
-    private static final double BARCELONA_LNG = 2.183333;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         super.onCreate(savedInstanceState);
         mFragmentManager = getSupportFragmentManager();
-        setContentView(R.layout.activity_directions_fragment);
+        setContentView(R.layout.activity_directions);
         mButton = (Button) findViewById(R.id.button);
         initButtonText();
     }
@@ -54,8 +50,8 @@ public class DirectionsFragmentActivity extends SherlockFragmentActivity impleme
         if (directionsFragment != null) {
             cleanUpAfterResponse();
         } else {
-            directionsFragment = GoogleDirectionsFragment.newInstance(MADRID_LAT, MADRID_LNG, BARCELONA_LAT,
-                    BARCELONA_LNG);
+            directionsFragment = GoogleDirectionsFragment.newInstance(Common.MADRID_LAT, Common.MADRID_LNG,
+                    Common.BARCELONA_LAT, Common.BARCELONA_LNG);
             attach(directionsFragment, DIRECTIONS_FRAGMENT);
             setProgressBarIndeterminateVisibility(true);
             mButton.setText(android.R.string.cancel);

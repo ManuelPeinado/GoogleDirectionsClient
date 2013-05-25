@@ -29,7 +29,8 @@ import com.actionbarsherlock.app.SherlockListActivity;
 
 public class HomeActivity extends SherlockListActivity {
     private List<ActivityInfo> activitiesInfo = Arrays.asList(
-            new ActivityInfo(DirectionsFragmentActivity.class, R.string.activity_title_directions_fragment));
+            new ActivityInfo(DirectionsFragmentActivity.class, R.string.activity_title_directions_fragment),
+            new ActivityInfo(DirectionsServiceActivity.class, R.string.activity_title_directions_service));
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
