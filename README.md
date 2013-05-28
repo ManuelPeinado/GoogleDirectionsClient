@@ -9,7 +9,7 @@ Three different clients are provided:
 A low level client that takes care of performing a request to the API in a background thread, parsing the result and passing it to you using a listener interface. This client will even allow you to make synchronous requests, using the `getDirectionsSync` method. Just don't do it in the UI thread!
 
 #####GoogleDirectionsFragment
-A non-retain-instance fragment that makes extremely simple to implement an activity that makes requests to the Directions API, as it takes care of handling the orientation changes in a transparent manner.
+A non-retain-instance fragment that makes it extremely simple to implement an activity that makes requests to the Directions API, as it takes care of handling the orientation changes in a transparent manner.
 #####GoogleDirectionsService
 An IntentService derived class that will perform a request to the API in the background and notify you when the result is ready using a local broadcast message. This should be the client of choice when you don't want to tie your requests to a particular activity. Just remember that one request cannot be processed until the previous one has finished, so this client might perform poorly in cases where you need to make several requests in parallel, or where you need to cancel a request and start a new one immediately.
 
