@@ -1,7 +1,7 @@
 GoogleDirectionsClient
 ======================
 
-This library provides a set of classes that simplify working with the Google Directions API by taking care of performing the HTTP request in the background and of parsing the result.
+This library provides a set of classes that simplify working with the Google Directions API by taking care of performing the HTTP request in the background and parsing the result.
 
 Three different clients are provided:
 
