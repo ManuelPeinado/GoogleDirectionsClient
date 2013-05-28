@@ -6,7 +6,7 @@ This library provides a set of classes that simplify working with the Google Dir
 Three different clients are provided:
 
 #####GoogleDirectionsClient
-A low level client that takes care of performing a request to the API in a background thread, parsing the result and passing it to you using a listener interface. This client will even allow you to make asynchronous requests, using the `getDirectionsAsync` method. Just don't do it in the UI thread!
+A low level client that takes care of performing a request to the API in a background thread, parsing the result and passing it to you using a listener interface. This client will even allow you to make synchronous requests, using the `getDirectionsSync` method. Just don't do it in the UI thread!
 
 #####GoogleDirectionsFragment
 A non-retain-instance fragment that makes extremely simple to implement an activity that makes requests to the Directions API, as it takes care of handling the orientation changes in a transparent manner.
